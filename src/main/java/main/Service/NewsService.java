@@ -25,6 +25,8 @@ public class NewsService {
     @Autowired
     private GroupRepository groupRepository;
 
+
+    //Обновление новости
     public NewsResponse update(UpdateNewsRequest updateNews){
         NewsResponse newsResponse = new NewsResponse();
 
@@ -35,7 +37,6 @@ public class NewsService {
             newsResponse.setResult(true);
         }
 
-
         if (newsResponse.isResult()) {
             NewsGroup newsGroup = groupRepository.getOne(updateNews.getGroup());
             NewsItem newsItem = new NewsItem();
@@ -44,13 +45,13 @@ public class NewsService {
             newsItem.setName(updateNews.getName());
             newsItem.setText(updateNews.getText());
 
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             newsItem.setDate(new Date());
             newsRepository.save(newsItem);
         }
         return newsResponse;
     }
 
+    //Получение новости на редактирование
     public NewsItem getSingleNews(int newsId){
         Optional<NewsItem> newsItemOptional = newsRepository.findById(newsId);
         NewsItem newsItem = new NewsItem();
@@ -60,6 +61,7 @@ public class NewsService {
         return newsItem;
     }
 
+    //Удаление новости
     public NewsResponse delete(String newsId){
         NewsResponse newsResponse = new NewsResponse();
         System.out.println(newsId);
@@ -70,8 +72,9 @@ public class NewsService {
         newsResponse.setResult(true);
 
         return newsResponse;
-
     }
+
+    //Сохранение новости
     public NewsResponse save(NewsRequest newsRequest){
         NewsResponse newsResponse = new NewsResponse();
         if(newsRequest.getName().equals("") || newsRequest.getText().equals("")){
@@ -92,10 +95,10 @@ public class NewsService {
             newsItem.setGroup(newsGroup);
             newsRepository.save(newsItem);
         }
-
         return newsResponse;
     }
 
+    //Получение списка новостей в соответсвии с фильтром (группа, строка поиска). По умолчанию - Все
     public ArrayList<NewsListResponse> filteredNewsList(String filter){
         ArrayList<NewsItem> itemArrayList;
         ArrayList<NewsListResponse> newsListResponses = new ArrayList<>();
@@ -121,12 +124,10 @@ public class NewsService {
 
         });
 
-        //Возвращать форматированный респонс
-        // В Частности форматировать дату и передавать группу вместо id
-
         return newsListResponses;
     }
 
+    //Маппинг Новости в формат необходимый по API
     private NewsListResponse mapNewsItemToNewsListResponse(NewsItem newsItem){
         NewsListResponse newsListResponse = new NewsListResponse();
         newsListResponse.setId(newsItem.getId());

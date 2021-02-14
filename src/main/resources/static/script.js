@@ -134,7 +134,7 @@ var textForm = {"name":$("#name_1").val(),"text":$("#text_1").val(),"group":$("#
             data: JSON.stringify(textForm),
             contentType: "application/json; charset=utf-8",
             success: function(response) {
-                        if (response.result==true) {alert(response.result);}
+                        if (response.result==true) {alert("Новость добавлена");}
                             else{
                                 alert(response.error)
                             }
