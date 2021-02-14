@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>News Feed</title>
+    <style>
+body {
+  background-color: black;
+  text-align: center;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+.btn {
+  background-color: #1976D2;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 33%;
+  margin-bottom:10px;
+  opacity: 0.8;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+
+.open-button {
+  background-color: #2196F3;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 23px;
+  right: 28px;
+  width: 280px;
+}
+
+.form-popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 100px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+  color: black;
+}
+
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+
+}
+
+.form-container input[type=text], .form-container input[type=password], .form-container textarea, .form-container select {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+.form-container input[type=text]:focus, .form-container input[type=password]:focus, .form-container textarea:focus, .form-container select:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+.form-container .btn {
+  background-color: #1976D2;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.form-container .cancel {
+  background-color: #448AFF;
+}
+
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+
+
+</style>
+</head>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="script.js"></script>
+
+<body>
+
+<h1>Лента новостей</h1>
+<p>Вы можете: добавить, отредактировать или удалить новость</p>
+<p>Возможна фильтрация по имени категории и поиск по заголовку</p>
+
+<p>
+    <input type=button class="btn" value="Создать" id="new">
+    <input type=button class="btn" value="Редактировать" id="edit">
+    <input type=button class="btn" value="Удалить" id="delete">
+    <br>
+    <input type="text" id="search_text">
+    <input type=button class="btn" value="Поиск" id="search" >
+</p>
+
+<table align=center border=0>
+    <tr>
+        <td width="500">Новости:</td>
+        <td width="200">Группы:</td>
+    </tr>
+    <tr>
+        <td align="left" id="news_position"> </td>
+        <td valign="top" id="group_position"></td>
+    </tr>
+</table>
+
+
+<div class="form-popup" id="myForm">
+    <form action="#" class="form-container">
+        <h1>Новость</h1>
+
+        <label id="name"><b>Заголовок</b></label>
+        <input type="text" id="name_1" required>
+
+        <label id="group"><b>Группа</b></label>
+        <select name="group" id="group_list" required>
+            <option disabled>Группа</option>
+        </select>
+
+        <label id="text"><b>Текст</b></label>
+        <textarea placeholder="Текст новости" name="text" cols="36" rows="10" id="text_1" required></textarea>
+
+        <button type="button" class="btn" onclick="sendAndcloseForm()">Отправить</button>
+        <button type="button" class="btn cancel" onclick="justCloseForm()">Закрыть</button>
+    </form>
+</div>
+
+<div class="form-popup" id="editForm">
+    <form action="#" class="form-container">
+        <h1>Новость</h1>
+
+        <label id="idNewsTitle"><b>Номер поста: </b></label>
+        <label id="idNews"></label>
+        <br>
+        <label id="editName"><b>Заголовок</b></label>
+        <input type="text" id="editName_1" required>
+
+        <label id="editGroup"><b>Группа</b></label>
+        <select name="group" id="editGroup_list" required>
+            <option disabled>Группа</option>
+        </select>
+
+        <label id="editText"><b>Текст</b></label>
+        <textarea placeholder="Текст новости" name="text" cols="36" rows="10" id="editText_1" required></textarea>
+
+        <button type="button" class="btn" onclick="sendEditedAndcloseForm()">Отправить изменения</button>
+        <button type="button" class="btn cancel" onclick="justCloseForm()">Закрыть</button>
+    </form>
+</div>
+
+</body>
+</html>
